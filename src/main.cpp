@@ -1,18 +1,19 @@
-#include <Arduino.h>
-
-// put function declarations here:
-int myFunction(int, int);
-
+#if CONFIG_SPIRAM_SUPPORT
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(115200);
+  // PSRAMを初期化
+  if (psramFound()) {
+    Serial.println("PSRAM is found.");
+    size_t psramSize = ESP.getPsramSize();
+    Serial.print("PSRAM size: ");
+    Serial.print(psramSize / (1024 * 1024));
+    Serial.println(" MB");
+  } else {
+    Serial.println("PSRAM is not found.");
+  }
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // ここでは何もしません。
 }
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
+#endif
